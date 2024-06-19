@@ -141,6 +141,10 @@ export class InicioComponent implements OnInit {
         // Limpiar los radios, ya que en el cambio de esAsociado se quedan seleccionados
         $( 'input[name=list-radio]' ).prop( 'checked', false );
         $( 'input[name=list-radio-user]' ).prop( 'checked', false );
+        
+        //Ocultar los campos de fecha visita y agencia visita
+        this.mostrarListadoAgencia = false;
+        this.mostrarFechaCita = false;
     }
     
     getAgencias() {
@@ -190,19 +194,29 @@ export class InicioComponent implements OnInit {
             // Resetear los radios
             this.asociado.contactoLlamada  = null;
             this.asociado.contactoWhatsApp = null;
+            // Asignar true al método seleccionado
+            if ( metodo == 'whatsapp' && input.checked ) {
+                this.asociado.contactoWhatsApp = 3;
+            } else if ( metodo == 'llamada' && input.checked ) {
+                this.asociado.contactoLlamada = 1;
+            }
+        }
+    }
+    
+    controlEstadoRadiosCita( metodo : string, event : Event ) {
+        const input = event.target as HTMLInputElement | null;
+        
+        if ( input ) {
+            // Resetear los radios
             this.asociado.visitaAgencia    = null;
             this.asociado.visitarAsociado  = null;
             // Asignar true al método seleccionado
-            if ( metodo == 'whatsapp' && input.checked ) {
-                this.asociado.contactoWhatsApp = 2;
-            } else if ( metodo == 'llamada' && input.checked ) {
-                this.asociado.contactoLlamada = 1;
-            } else if ( metodo == 'visitaAgencia' && input.checked ) {
-                this.asociado.visitaAgencia = 1;
+            if ( metodo == 'visitaAgencia' && input.checked ) {
+                this.asociado.visitaAgencia = 16;
                 this.mostrarListadoAgencia  = true;
                 this.mostrarFechaCita       = false;
             } else if ( metodo == 'visitarAsociado' && input.checked ) {
-                this.asociado.visitarAsociado = 1;
+                this.asociado.visitarAsociado = 4;
                 this.mostrarFechaCita         = true;
                 this.mostrarListadoAgencia    = false;
                 this.asociado.idAgencia       = null;
@@ -243,9 +257,7 @@ export class InicioComponent implements OnInit {
             mensajeError = 'Ingrése su nombre completo.';
         }
         
-        console.log( 'mensajeError: ', mensajeError );
-        console.log( 'this.asociado: ', this.asociado );
-        return false;
+        console.log( 'asociado: ', this.asociado );
         
         if ( mensajeError == '' ) {
             // Invoca reCAPTCHA v3 antes de enviar los datos del formulario
@@ -259,6 +271,7 @@ export class InicioComponent implements OnInit {
                 
                 this.servicioService.postData( 'ahorralink/guardarFormulario', data ).subscribe( {
                     next  : res => {
+                        console.log( 'res: ', res );
                         if ( res.respuesta == 'success' ) {
                             this.servicioService.toaster(
                                 'success',
