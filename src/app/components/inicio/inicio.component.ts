@@ -257,8 +257,6 @@ export class InicioComponent implements OnInit {
             mensajeError = 'Ingrése su nombre completo.';
         }
         
-        console.log( 'asociado: ', this.asociado );
-        
         if ( mensajeError == '' ) {
             // Invoca reCAPTCHA v3 antes de enviar los datos del formulario
             this.recaptchaService.execute( 'solicitudCredito' ).subscribe( ( token : string ) => {

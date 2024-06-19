@@ -24,12 +24,14 @@ import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha';
 
 import { environment } from '../environments/environment';
 import { NgOptimizedImage } from '@angular/common';
+import { UppercaseDirective } from './directives/uppercase.directive';
 
 @NgModule( {
     declarations : [
         AppComponent,
         InicioComponent,
-        SoloNumerosDirective
+        SoloNumerosDirective,
+        UppercaseDirective
     ],
     imports : [
         BrowserModule,
