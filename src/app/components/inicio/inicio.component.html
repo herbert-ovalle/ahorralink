@@ -1,0 +1,270 @@
+<section class="bg-white dark:bg-gray-900">
+    
+    <div class="bg-[url('assets/fondo-presta-link.jpg')] bg-no-repeat bg-cover bg-center bg-gray-700">
+        <!--<div class="px-4 lg:pt-24 pt-8 pb-72 lg:pb-80 mx-auto max-w-screen-sm text-center lg:px-6 ">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-white">PrestaLink El Bienestar</h2>
+            <p class="mb-16 font-light text-gray-400 sm:text-xl">Una forma rapida de solicitar tu crédito con nosotros, te invitamos a llenar tu información.</p>
+        </div>-->
+        <div class="px-4 pt-8 pb-72 mx-auto max-w-screen-sm text-center">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex justify-center items-center md:col-span-1">
+                    <img ngSrc="assets/logoCoope.png" width="200" height="39" alt="Cooperativa El Bienestar R.L." class="mb-4">
+                </div>
+                <div class="flex justify-center items-center md:col-span-1">
+                    <img ngSrc="assets/logoPrestaLink.png" width="100" height="77" alt="Prestalink">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="px-4 mx-auto -mt-96 max-w-screen-xl py-28 lg:px-6">
+        <form novalidate
+              autocomplete="off"
+              class="p-6 shadow-gray-600 mx-auto mb-16 bg-white max-w-screen-md rounded-lg dark:opacity-85 border border-gray-200 shadow-sm lg:mb-28 dark:bg-gray-800 dark:border-gray-700">
+            <label class="inline-flex items-center cursor-pointer select-none">
+                <input (click)="toggleEsAsociado()" name="esAsociado" type="checkbox" class="sr-only peer">
+                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Haga clic aquí si es Asociado de Cooperativa El Bienestar</span>
+            </label>
+            <hr class="mt-2 mb-2">
+            <!--DPI-->
+            <div class="mb-6 mt-6" *ngIf="esAsociado" @slideUpDown>
+                <label for="dpi"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">DPI (Proporciona tu dpi para poder agilizar proceso)<span class="text-red-700">*</span></label>
+                <div class="relative w-full">
+                    <input type="text"
+                           id="dpi"
+                           name="dpi"
+                           solo-numeros
+                           maxlength="13"
+                           [(ngModel)]="asociado.dpi"
+                           (keydown.enter)="obtenerInformacionPorDpi(asociado.dpi)"
+                           class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
+                    <button type="button"
+                            (click)="obtenerInformacionPorDpi(asociado.dpi)"
+                            class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                    </button>
+                </div>
+            </div>
+            <!--Nombre completo-->
+            <div class="grid gap-6 mb-6 md:grid-cols-2" *ngIf="!esAsociado" @slideUpDown>
+                <div>
+                    <label for="nombres"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombres<span class="text-red-700">*</span></label>
+                    <input type="text"
+                           id="nombres"
+                           name="nombres"
+                           maxlength="60"
+                           [(ngModel)]="asociado.nombres"
+                           class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
+                </div>
+                <div>
+                    <label for="apellidos"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Apellidos<span class="text-red-700">*</span></label>
+                    <input type="text"
+                           id="apellidos"
+                           name="apellidos"
+                           maxlength="60"
+                           [(ngModel)]="asociado.apellidos"
+                           class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
+                </div>
+            </div>
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <!--Telefono es asociado-->
+                <div *ngIf="esAsociado && asociado.confirmarTelefono" @slideUpDown>
+                    <label for="confirmarTelefono"
+                           *ngIf="esAsociado"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Confirme si aún es su número telefónico
+                    </label>
+                    <input type="text"
+                           id="confirmarTelefono"
+                           name="confirmarTelefono"
+                           readonly
+                           disabled
+                           [ngModel]="asociado.confirmarTelefono"
+                           class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
+                </div>
+                <!--Cambie numero de telefono es asociado-->
+                <div *ngIf="esAsociado && asociado.confirmarTelefono" @slideUpDown>
+                    <label for="cambieNumero"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Si cambió de número, agreguelo aqui (opcional)
+                    </label>
+                    <input type="text"
+                           id="cambieNumero"
+                           name="cambieNumero"
+                           solo-numeros
+                           maxlength="8"
+                           [(ngModel)]="asociado.cambieTelefono"
+                           class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
+                </div>
+                
+                <!--Telefono no es asociado-->
+                <div *ngIf="!esAsociado" @slideUpDown>
+                    <label for="telefonoNoAsociado"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Teléfono<span class="text-red-700">*</span>
+                    </label>
+                    <input type="text"
+                           id="telefonoNoAsociado"
+                           name="telefonoNoAsociado"
+                           solo-numeros
+                           maxlength="8"
+                           [(ngModel)]="asociado.telefono"
+                           class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
+                </div>
+                
+                <!--Departamento-->
+                <div *ngIf="!esAsociado" @slideUpDown>
+                    <label for="departamento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Departamento<span class="text-red-700">*</span></label>
+                    <select id="departamento"
+                            name="departamento"
+                            [(ngModel)]="asociado.idDepartamento"
+                            (ngModelChange)="getMunicipios(asociado.idDepartamento)"
+                            class="block uppercase p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
+                        <option value="-1" selected disabled>Seleccione una opción</option>
+                        <option *ngFor="let dep of lstDepartamentos" value="{{ dep.id_departamento }}">{{ dep.departamento }}</option>
+                    </select>
+                </div>
+                <!--Municipio-->
+                <div *ngIf="!esAsociado" @slideUpDown>
+                    <label for="municipio"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Municipio<span class="text-red-700">*</span></label>
+                    <select id="municipio"
+                            name="municipio"
+                            [(ngModel)]="asociado.idMunicipio"
+                            class="block uppercase p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
+                        <option value="-1" selected disabled>Seleccione una opción</option>
+                        <option *ngFor="let mun of lstMunicipios" value="{{ mun.id_municipio }}">{{ mun.municipio }}</option>
+                    </select>
+                </div>
+                <!--Monto-->
+                <div>
+                    <label for="monto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Monto<span class="text-red-700">*</span></label>
+                    <select id="monto"
+                            [(ngModel)]="asociado.idMonto"
+                            name="monto"
+                            class="block uppercase p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
+                        <option value="-1" selected disabled>Seleccione una opción</option>
+                        <option *ngFor="let mnt of lstMontos" value="{{ mnt.idMonto }}">{{ mnt.monto }}</option>
+                    </select>
+                </div>
+                <!--En qué tienes pensado utilizar el crédito-->
+                <div>
+                    <label for="motivoPrestamo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">¿En qué tienes pensado utilizar el crédito?<span class="text-red-700">*</span></label>
+                    <select id="motivoPrestamo"
+                            name="motivoPrestamo"
+                            [(ngModel)]="asociado.idMotivoPrestamo"
+                            class="block uppercase p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
+                        <option value="-1" selected disabled>Seleccione una opción</option>
+                        <option *ngFor="let cred of lstDestinoCredito" value="{{ cred.idDestino_credito }}">{{ cred.destinoCredito }}</option>
+                    </select>
+                </div>
+                <!--Como obtiene sus ingresos-->
+                <div>
+                    <label for="ingresos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">¿Como obtienes tus ingresos?<span class="text-red-700">*</span></label>
+                    <select id="ingresos"
+                            name="ingresos"
+                            [(ngModel)]="asociado.idIngresos"
+                            class="block uppercase p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
+                        <option value="-1" selected disabled>Seleccione una opción</option>
+                        <option *ngFor="let rb of lstRubros" value="{{ rb.id_rubro }}">{{ rb.rubro }}</option>
+                    </select>
+                </div>
+                <!--Cómo quieres que te contactemos-->
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">¿Cómo quieres que te contactemos?<span class="text-red-700">*</span></label>
+                    <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                            <div class="flex items-center ps-3">
+                                <input id="horizontal-list-radio-license" (change)="controlEstadoRadios('whatsapp', $event)" type="radio" name="list-radio"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                <label for="horizontal-list-radio-license" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Whatsapp</label>
+                            </div>
+                        </li>
+                        <li class="w-full dark:border-gray-600">
+                            <div class="flex items-center ps-3">
+                                <input id="horizontal-list-radio-passport" (change)="controlEstadoRadios('llamada', $event)" type="radio" name="list-radio"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                <label for="horizontal-list-radio-passport" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Llamada</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <button type="button"
+                    (click)="guardarFormulario()"
+                    class="uppercase py-3 px-5 mt-4 text-sm font-bold text-center text-white rounded-lg bg-blue-600 sm:w-fit hover:bg-blue-800">
+                Iniciar Proceso
+            </button>
+        </form>
+        
+        <div class="space-y-8 text-center md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+            <div>
+                <p class="mb-2 text-xl font-bold dark:text-white">SERVICIOS</p>
+                <ul class="mb-3 text-gray-500 dark:text-gray-400">
+                    <li>Ahorros</li>
+                    <li>Préstamos</li>
+                    <li>Seguros</li>
+                    <li>Remesas MICOOPE</li>
+                </ul>
+            </div>
+            <div>
+                <p class="mb-2 text-xl font-bold dark:text-white">CONTACTO</p>
+                <p class="mb-3 text-gray-500 dark:text-gray-400">
+                    info&#64;micoopebienestar.com.gt
+                </p>
+                <p class="mb-3 text-gray-500 dark:text-gray-400">
+                    (502) 7961-7000
+                </p>
+            </div>
+            <div>
+                <p class="mb-2 text-xl font-bold dark:text-white">REDES SOCIALES</p>
+                <p class="mb-3 text-gray-500 dark:text-gray-400 flex aling-center justify-around">
+                    <!-- Facebook-->
+                    <a href="https://facebook.com/CooperativaElBienestar/"
+                       target="_blank"
+                       class="fill-black dark:fill-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center">
+                        <svg width="40px" height="40px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.03998C6.5 2.03998 2 6.52998 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.84998C10.44 7.33998 11.93 5.95998 14.22 5.95998C15.31 5.95998 16.45 6.14998 16.45 6.14998V8.61998H15.19C13.95 8.61998 13.56 9.38998 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C15.9164 21.5878 18.0622 20.3855 19.6099 18.57C21.1576 16.7546 22.0054 14.4456 22 12.06C22 6.52998 17.5 2.03998 12 2.03998Z"/></svg>
+                        <span class="sr-only">Facebook</span>
+                    </a>
+                    <!-- Instagram-->
+                    <a href="https://instagram.com/micoopeelbienestar"
+                       target="_blank"
+                       class="fill-black dark:fill-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center">
+                        <svg width="45px" height="45px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M20.445 5h-8.891A6.559 6.559 0 0 0 5 11.554v8.891A6.559 6.559 0 0 0 11.554 27h8.891a6.56 6.56 0 0 0 6.554-6.555v-8.891A6.557 6.557 0 0 0 20.445 5zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342h-8.891a4.341 4.341 0 0 1-4.341-4.342v-8.891a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/><path d="M16 10.312c-3.138 0-5.688 2.551-5.688 5.688s2.551 5.688 5.688 5.688 5.688-2.551 5.688-5.688-2.55-5.688-5.688-5.688zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zM21.7 8.991a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/></svg>
+                        <span class="sr-only">Instagram</span>
+                    </a>
+                    <!-- Sitio Web-->
+                    <a href="https://micoopebienestar.com.gt/"
+                       target="_blank"
+                       class="fill-black dark:fill-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center">
+                        <svg height="35px" width="35px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+                            <g>
+                                <path class="st0" d="M181.374,369.211c19.336,18.703,45.727,30.187,74.563,30.187c1.133,0,2.281-0.015,3.422-0.054 c29.023-0.906,55.07-13.305,73.774-32.656c18.703-19.321,30.187-45.719,30.187-74.555c0-1.133-0.015-2.274-0.062-3.414l-9,0.281 l9-0.289c-0.906-29.023-13.297-55.062-32.641-73.766c-19.336-18.703-45.726-30.188-74.57-30.18c-1.141,0-2.281,0.016-3.422,0.047 c-29.016,0.906-55.062,13.305-73.766,32.656c-18.703,19.321-30.187,45.719-30.187,74.562c0,1.133,0.023,2.282,0.062,3.414 C149.64,324.469,162.031,350.508,181.374,369.211z M320.164,354.164c-8.226,8.508-18.133,15.367-29.195,20.078 c4.594-6.618,8.515-14.43,11.758-23.18h20.312C322.102,352.118,321.148,353.156,320.164,354.164z M331.586,339.594h-25.203 c3.477-12.656,5.594-26.781,6.023-41.781h32.68C344.133,313.078,339.32,327.321,331.586,339.594z M331.602,244.562 c7.703,12.219,12.5,26.438,13.484,41.782h-32.711c-0.437-14.977-2.5-29.125-5.969-41.782H331.602z M318.086,227.906 c1.719,1.656,3.344,3.406,4.922,5.187h-20.304c-1.719-4.648-3.594-9.078-5.703-13.156c-1.844-3.57-3.836-6.914-5.969-10 C301.109,214.25,310.281,220.359,318.086,227.906z M261.734,202.992c2.484,0.149,4.945,0.398,7.374,0.75 c1.008,0.664,2.016,1.375,3.031,2.195c6.86,5.594,13.321,15.023,18.313,27.156h-28.718V202.992z M261.734,244.562H294.5 c3.679,12.336,5.976,26.562,6.445,41.782h-39.21V244.562z M261.734,297.813h39.171c-0.468,15.234-2.781,29.453-6.461,41.781h-32.71 V297.813z M261.734,351.062h28.687c-1.141,2.766-2.328,5.43-3.602,7.898c-4.32,8.375-9.398,14.946-14.68,19.258 c-0.992,0.812-1.984,1.507-2.976,2.164c-2.446,0.359-4.93,0.617-7.43,0.781V351.062z M180.39,339.594 c-7.695-12.203-12.5-26.43-13.477-41.781h32.711c0.438,14.977,2.5,29.125,5.969,41.781H180.39z M193.906,356.25 c-1.718-1.657-3.343-3.398-4.922-5.188h20.305c1.726,4.657,3.602,9.086,5.695,13.164c1.859,3.57,3.844,6.914,5.985,9.993 C210.874,369.906,201.718,363.797,193.906,356.25z M250.266,381.172c-2.485-0.156-4.954-0.398-7.375-0.758 c-1.016-0.657-2.016-1.375-3.031-2.195c-6.867-5.578-13.321-15.016-18.313-27.157h28.719V381.172z M250.266,339.594H217.5 c-3.688-12.328-5.985-26.562-6.446-41.781h39.211V339.594z M250.266,286.344h-39.172c0.469-15.226,2.766-29.438,6.453-41.782 h32.719V286.344z M225.179,225.203c4.321-8.375,9.391-14.946,14.68-19.266c0.992-0.805,1.984-1.508,2.984-2.156 c2.438-0.367,4.922-0.626,7.422-0.782v30.094h-28.688C222.71,230.344,223.906,227.664,225.179,225.203z M191.828,229.992 c8.226-8.5,18.141-15.367,29.203-20.078c-4.594,6.617-8.531,14.43-11.766,23.179h-20.305 C189.89,232.039,190.843,231,191.828,229.992z M180.406,244.562h25.203c-3.469,12.672-5.594,26.797-6.023,41.782h-32.68 C167.859,271.086,172.672,256.844,180.406,244.562z"/>
+                                <path class="st0" d="M464,0H48C21.492,0,0,21.492,0,48v416c0,26.508,21.492,48,48,48h416c26.507,0,48-21.492,48-48V48 C512,21.492,490.507,0,464,0z M444.664,35c10.492,0,19,8.508,19,19s-8.508,19-19,19s-19-8.508-19-19S434.172,35,444.664,35z M374.164,35c10.492,0,19,8.508,19,19s-8.508,19-19,19s-19-8.508-19-19S363.672,35,374.164,35z M303.664,35 c10.492,0,19,8.508,19,19s-8.508,19-19,19s-19-8.508-19-19S293.172,35,303.664,35z M472,464c0,4.406-3.586,8-8,8H48 c-4.414,0-8-3.594-8-8V104h432V464z" />
+                            </g>
+                        </svg>
+                        <span class="sr-only">El BIENESTAR</span>
+                    </a>
+                    <!-- Whatsapp-->
+                    <a href="https://api.whatsapp.com/send?phone=+50279617000&text=Chat%20%20MICOOPE%20Bienestar"
+                       target="_blank"
+                       class="focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center">
+                        <svg width="35px" height="35px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path class="fill-black dark:fill-white" d="M6.014 8.00613C6.12827 7.1024 7.30277 5.87414 8.23488 6.01043L8.23339 6.00894C9.14051 6.18132 9.85859 7.74261 10.2635 8.44465C10.5504 8.95402 10.3641 9.4701 10.0965 9.68787C9.7355 9.97883 9.17099 10.3803 9.28943 10.7834C9.5 11.5 12 14 13.2296 14.7107C13.695 14.9797 14.0325 14.2702 14.3207 13.9067C14.5301 13.6271 15.0466 13.46 15.5548 13.736C16.3138 14.178 17.0288 14.6917 17.69 15.27C18.0202 15.546 18.0977 15.9539 17.8689 16.385C17.4659 17.1443 16.3003 18.1456 15.4542 17.9421C13.9764 17.5868 8 15.27 6.08033 8.55801C5.97237 8.24048 5.99955 8.12044 6.014 8.00613Z"/>
+                            <path class="fill-black dark:fill-white" fill-rule="evenodd" clip-rule="evenodd" d="M12 23C10.7764 23 10.0994 22.8687 9 22.5L6.89443 23.5528C5.56462 24.2177 4 23.2507 4 21.7639V19.5C1.84655 17.492 1 15.1767 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23ZM6 18.6303L5.36395 18.0372C3.69087 16.4772 3 14.7331 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C11.0143 21 10.552 20.911 9.63595 20.6038L8.84847 20.3397L6 21.7639V18.6303Z"/>
+                        </svg>
+                        <span class="sr-only">Whatsapp</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--Uso de datatables con angular, ver configuracion en su componente de javascript-->
+<!--<table datatable [dtOptions]="dtOptions">-->
