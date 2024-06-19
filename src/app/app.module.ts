@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,6 +10,9 @@ import { AppComponent } from './app.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
+
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { Spanish } from 'flatpickr/dist/l10n/es.js';
 
 import { ToastrModule } from 'ngx-toastr';
 import { ServicioService } from './services/servicio.service';
@@ -36,9 +40,13 @@ import { NgOptimizedImage } from '@angular/common';
         HttpClientModule,
         ToastrModule.forRoot(),
         ReactiveFormsModule,
+        NgSelectModule,
         FormsModule,
         RecaptchaV3Module,
-        NgOptimizedImage
+        NgOptimizedImage,
+        FlatpickrModule.forRoot( {
+            locale : Spanish
+        } )
     ],
     providers    : [
         ServicioService,

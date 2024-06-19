@@ -23,40 +23,26 @@ export class InicioComponent implements OnInit {
     
     dtOptions : DataTables.Settings = {};
     
-    esAsociado : boolean    = false;
-    seValidoDpi : boolean   = false;
-    asociado : any          = {
-        dpi               : '',
-        nombres           : '',
-        apellidos         : '',
-        confirmarTelefono : '',
-        cambieTelefono    : '',
-        telefono          : '',
-        idDepartamento    : '-1',
-        idMunicipio       : '-1',
-        idMonto           : '-1',
-        idMotivoPrestamo  : '-1',
-        idIngresos        : '-1',
-        contactoWhatsApp  : false,
-        contactoLlamada   : false
+    asociado : any         = {
+        nombres          : '',
+        apellidos        : '',
+        telefono         : '',
+        idDepartamento   : null,
+        idMunicipio      : null,
+        contactoWhatsApp : false,
+        contactoLlamada  : false,
+        visitaAgencia    : false,
+        visitarAsociado  : false,
+        fechaCita        : '',
+        comentario       : '',
+        idAgencia        : null
     };
-    socioEncontrado : any   = {
-        nombres         : '',
-        apellidos       : '',
-        idSocio         : '',
-        dpi             : '',
-        celular         : '',
-        socio           : '',
-        id_departamento : '',
-        dep             : '',
-        id_municipio    : '',
-        muni            : ''
-    };
-    lstDepartamentos : any  = [];
-    lstMunicipios : any     = [];
-    lstMontos : any         = [];
-    lstDestinoCredito : any = [];
-    lstRubros : any         = [];
+    lstDepartamentos : any = [];
+    lstMunicipios : any    = [];
+    lstAgencias : any      = [];
+    
+    mostrarListadoAgencia : boolean = false;
+    mostrarFechaCita : boolean      = false;
     
     private rangosCelular = [
         { inicio : 30000000, final : 32289999, operador : 'TIGO' },
@@ -137,52 +123,42 @@ export class InicioComponent implements OnInit {
         this.getDepartamentos();
     }
     
-    toggleEsAsociado() {
-        this.esAsociado = !this.esAsociado;
-        this.resetearDatosFormulario();
+    resetearDatosFormulario() {
+        this.asociado = {
+            nombres          : '',
+            apellidos        : '',
+            telefono         : '',
+            idDepartamento   : null,
+            idMunicipio      : null,
+            contactoWhatsApp : false,
+            contactoLlamada  : false,
+            visitaAgencia    : false,
+            visitarAsociado  : false,
+            fechaCita        : '',
+            comentario       : '',
+            idAgencia        : null
+        };
+        // Limpiar los radios, ya que en el cambio de esAsociado se quedan seleccionados
+        $( 'input[name=list-radio]' ).prop( 'checked', false );
+        $( 'input[name=list-radio-user]' ).prop( 'checked', false );
     }
     
-    resetearDatosFormulario() {
-        this.asociado        = {
-            dpi               : '',
-            nombres           : '',
-            apellidos         : '',
-            confirmarTelefono : '',
-            cambieTelefono    : '',
-            telefono          : '',
-            idDepartamento    : '-1',
-            idMunicipio       : '-1',
-            idMonto           : '-1',
-            idMotivoPrestamo  : '-1',
-            idIngresos        : '-1',
-            contactoWhatsApp  : false,
-            contactoLlamada   : false
-        };
-        this.socioEncontrado = {
-            nombres         : '',
-            apellidos       : '',
-            idSocio         : '',
-            dpi             : '',
-            celular         : '',
-            socio           : '',
-            id_departamento : '',
-            dep             : '',
-            id_municipio    : '',
-            muni            : ''
-        };
-        // Limpiar los radios ya que en el cambio de esAsociado se quedan seleccionados
-        $( 'input[name=list-radio]' ).prop( 'checked', false );
-        // Cambiar validacion del dpi
-        this.seValidoDpi = false;
+    getAgencias() {
+        this.servicioService.getData( 'ahorralink/getAgencias' ).subscribe( {
+            next  : res => {
+                this.lstAgencias = res;
+            },
+            error : err => {
+                console.log( 'Error en getAgencias(): ', err );
+            }
+        } );
     }
     
     getDepartamentos() {
-        this.servicioService.getData( 'formulario/getDepartamentos' ).subscribe( {
+        this.servicioService.getData( 'ahorralink/getDepartamentos' ).subscribe( {
             next  : res => {
                 this.lstDepartamentos = res;
-                this.getMontos();
-                this.getDestinoCredito();
-                this.getRubros();
+                this.getAgencias();
             },
             error : err => {
                 console.log( 'Error en getDepartamentos(): ', err );
@@ -194,104 +170,17 @@ export class InicioComponent implements OnInit {
         let data = {
             'idDepartamento' : idDepartamento
         };
-        this.servicioService.postData( 'formulario/getMunicipios', data ).subscribe( {
+        this.servicioService.postData( 'ahorralink/getMunicipios', data ).subscribe( {
             next  : res => {
-                this.lstMunicipios = res;
+                this.lstMunicipios        = res;
+                // Resetear el valor seleccionado de la clasificación del crédito
+                this.asociado.idMunicipio = null;
             },
             error : err => {
                 console.log( 'Error en getMunicipios(): ', err );
             }
         } );
         
-    }
-    
-    getMontos() {
-        this.servicioService.getData( 'formulario/getMontos' ).subscribe( {
-            next  : res => {
-                this.lstMontos = res;
-            },
-            error : err => {
-                console.log( 'Error en getMontos(): ', err );
-            }
-        } );
-    }
-    
-    getDestinoCredito() {
-        this.servicioService.getData( 'formulario/getDestinoCredito' ).subscribe( {
-            next  : res => {
-                this.lstDestinoCredito = res;
-            },
-            error : err => {
-                console.log( 'Error en getMontos(): ', err );
-            }
-        } );
-    }
-    
-    getRubros() {
-        this.servicioService.getData( 'formulario/getRubros' ).subscribe( {
-            next  : res => {
-                this.lstRubros = res;
-            },
-            error : err => {
-                console.log( 'Error en getMontos(): ', err );
-            }
-        } );
-    }
-    
-    obtenerInformacionPorDpi( dpi : any ) {
-        let mensajeError = '';
-        if ( ( dpi || '' ).length ) {
-            if ( dpi.length < 13 ) {
-                mensajeError = 'Complete correctamente el número de dpi.';
-            }
-        } else {
-            mensajeError = 'El campo del dpi esta vacío, verifique.';
-        }
-        
-        if ( mensajeError == '' ) {
-            let data = {
-                'dpi' : dpi
-            };
-            this.servicioService.postData( 'formulario/getUserData', data ).subscribe( {
-                next  : res => {
-                    if ( Array.isArray( res ) && res.length ) {
-                        const datosUsuario                   = res[ 0 ];
-                        this.asociado.confirmarTelefono      = this.transformarTelefono( datosUsuario.celular );
-                        // Asignar los datos del socio encontrado mediante el dpi
-                        this.socioEncontrado.nombres         = datosUsuario.nombres;
-                        this.socioEncontrado.apellidos       = datosUsuario.apellidos;
-                        this.socioEncontrado.idSocio         = datosUsuario.id_socio;
-                        this.socioEncontrado.dpi             = datosUsuario.dpi;
-                        this.socioEncontrado.celular         = datosUsuario.celular;
-                        this.socioEncontrado.socio           = datosUsuario.socio;
-                        this.socioEncontrado.id_departamento = datosUsuario.id_departamento;
-                        this.socioEncontrado.dep             = datosUsuario.dep;
-                        this.socioEncontrado.id_municipio    = datosUsuario.id_municipio;
-                        this.socioEncontrado.muni            = datosUsuario.muni;
-                        
-                        this.servicioService.toaster( 'success', 'Se verificaron sus datos, porfavor continue.', '', '5000' );
-                        this.seValidoDpi = true;
-                    } else {
-                        this.servicioService.toaster( 'warning', 'No se encotró información, verifique.', '', '5000' );
-                        this.seValidoDpi = false;
-                        this.resetearDatosFormulario();
-                    }
-                },
-                error : err => {
-                    console.log( 'Error en getDepartamentos(): ', err );
-                }
-            } );
-        } else {
-            this.servicioService.toaster( 'warning', mensajeError, '', '5000' );
-        }
-    }
-    
-    transformarTelefono( telefono : string ) {
-        let telefonoStr : string   = telefono.toString();
-        let ultimosCuatro : string = telefonoStr.slice( -4 );
-        let inicio : number        = telefonoStr.length - 4;
-        let reemplazo : string     = '*'.repeat( inicio );
-        return ( reemplazo + ultimosCuatro );
     }
     
     controlEstadoRadios( metodo : string, event : Event ) {
@@ -301,154 +190,95 @@ export class InicioComponent implements OnInit {
             // Resetear los radios
             this.asociado.contactoLlamada  = null;
             this.asociado.contactoWhatsApp = null;
+            this.asociado.visitaAgencia    = null;
+            this.asociado.visitarAsociado  = null;
             // Asignar true al método seleccionado
             if ( metodo == 'whatsapp' && input.checked ) {
                 this.asociado.contactoWhatsApp = 2;
             } else if ( metodo == 'llamada' && input.checked ) {
                 this.asociado.contactoLlamada = 1;
-                
+            } else if ( metodo == 'visitaAgencia' && input.checked ) {
+                this.asociado.visitaAgencia = 1;
+                this.mostrarListadoAgencia  = true;
+                this.mostrarFechaCita       = false;
+            } else if ( metodo == 'visitarAsociado' && input.checked ) {
+                this.asociado.visitarAsociado = 1;
+                this.mostrarFechaCita         = true;
+                this.mostrarListadoAgencia    = false;
+                this.asociado.idAgencia       = null;
             }
         }
     }
     
     guardarFormulario() {
-        let guardado = this.obtenerConExpiracion( 'guardado' );
+        let mensajeError = '';
         
-        // Si guardado no es null y no está en rango, elimina el valor actual de localStorage
-        if ( guardado && !guardado.enRango ) {
-            localStorage.removeItem( 'guardado' ); // Elimina el elemento expirado
-            guardado = null; // Reinicia la variable guardado
-        }
-        
-        if ( guardado && guardado.enRango ) {
-            this.servicioService.toaster( 'warning', 'Ya ha registrado sus datos anteriormente.', '', '5000' );
-            this.resetearDatosFormulario();
+        /*-- Inicio de las validaciones*/
+        if ( ( this.asociado.nombres || '' ).length || ( this.asociado.apellidos || '' ).length ) {
+            const esValido = this.validarTelefono( this.asociado.telefono );
+            if ( this.asociado.nombres.length < 6 ) {
+                mensajeError = 'Su nombre debe contener al menos 6 caracteres.';
+            } else if ( this.asociado.apellidos.length < 6 ) {
+                mensajeError = 'Su apellido debe contener al menos 6 caracteres.';
+            } else if ( !( this.asociado.telefono || '' ).length ) {
+                mensajeError = 'Ingrése su número de teléfono.';
+            } else if ( this.asociado.telefono.length < 8 ) {
+                mensajeError = 'El número de teléfono debe contener 8 caracteres.';
+            } else if ( !esValido ) {
+                mensajeError = 'El número de teléfono no es valido.';
+            } else if ( this.asociado.idDepartamento == null ) {
+                mensajeError = 'Seleccione un departamento.';
+            } else if ( this.asociado.idMunicipio == null ) {
+                mensajeError = 'Seleccione un municipio.';
+            } else if ( !this.asociado.contactoWhatsApp && !this.asociado.contactoLlamada ) {
+                mensajeError = 'Seleccione la opción que le gustaría que le contactemos.';
+            } else if ( !this.asociado.visitaAgencia && !this.asociado.visitarAsociado ) {
+                mensajeError = 'Seleccione la opción que prefiere en su cita.';
+            } else if ( this.asociado.visitaAgencia && this.asociado.idAgencia == null ) {
+                mensajeError = 'Seleccione su agencia mas cercana.';
+            } else if (this.asociado.visitarAsociado && this.asociado.fechaCita == '' ) {
+                mensajeError = 'Ingrese la fecha y hora de su cita.';
+            }
         } else {
-            let mensajeError = '';
-            /*-- Inicio de las validaciones*/
-            /*-- Validar los datos si el usuario selecciona que es asociado*/
-            if ( this.esAsociado ) {
-                if ( this.seValidoDpi ) {
-                    const esValidoCambioTel = this.validarTelefono(this.asociado.cambieTelefono);
-                    if ( ( this.asociado.dpi || '' ).length ) {
-                        if ( this.asociado.dpi.length < 13 ) {
-                            mensajeError = 'El dpi debe contener 13 caracteres, verifique.';
-                        } else if ( this.asociado.cambieTelefono.length && !esValidoCambioTel) {
-                            mensajeError = 'El teléfono ingresado no es valido.';
-                        } else if ( this.asociado.idMonto == '-1' ) {
-                            mensajeError = 'Seleccione el monto que necesita para su crédito.';
-                        } else if ( this.asociado.idMotivoPrestamo == '-1' ) {
-                            mensajeError = 'Seleccione en que tiene pensado utilizar su crédito.';
-                        } else if ( this.asociado.idIngresos == '-1' ) {
-                            mensajeError = 'Seleccione de donde obtiene sus ingresos.';
-                        } else if ( !this.asociado.contactoWhatsApp && !this.asociado.contactoLlamada ) {
-                            mensajeError = 'Seleccione la opción que le gustaría que le contactemos.';
+            mensajeError = 'Ingrése su nombre completo.';
+        }
+        
+        console.log( 'mensajeError: ', mensajeError );
+        console.log( 'this.asociado: ', this.asociado );
+        return false;
+        
+        if ( mensajeError == '' ) {
+            // Invoca reCAPTCHA v3 antes de enviar los datos del formulario
+            this.recaptchaService.execute( 'solicitudCredito' ).subscribe( ( token : string ) => {
+                console.debug( `Token [${ token }] generated` );
+                
+                let data : any = {
+                    asociado       : this.asociado,
+                    recaptchaToken : token
+                };
+                
+                this.servicioService.postData( 'ahorralink/guardarFormulario', data ).subscribe( {
+                    next  : res => {
+                        if ( res.respuesta == 'success' ) {
+                            this.servicioService.toaster(
+                                'success',
+                                'Su solicitud ha sido enviada, muy pronto recibira una llamada de uno de nuestros asesores. Ahora sera redireccionado a nuestro sitio web. Gracias.',
+                                '',
+                                '5000',
+                                '' );
+                            this.resetearDatosFormulario();
+                        } else {
+                            this.servicioService.toaster( res.respuesta, res.mensaje, '', '5000' );
                         }
-                    } else {
-                        mensajeError = 'Ingrése su número de dpi para poder continuar.';
+                    },
+                    error : err => {
+                        console.log( 'Error en guardarFormulario: ', err );
                     }
-                } else {
-                    mensajeError = 'Porfavor valide su dpi antes de continuar.';
-                }
-            } else {
-                if ( ( this.asociado.nombres || '' ).length || ( this.asociado.apellidos || '' ).length ) {
-                    const esValido = this.validarTelefono(this.asociado.telefono);
-                    if ( this.asociado.nombres.length < 6 ) {
-                        mensajeError = 'Su nombre debe contener al menos 6 caracteres.';
-                    } else if ( this.asociado.apellidos.length < 6 ) {
-                        mensajeError = 'Su apellido debe contener al menos 6 caracteres.';
-                    } else if ( !( this.asociado.telefono || '' ).length ) {
-                        mensajeError = 'Ingrése su número de teléfono.';
-                    } else if ( this.asociado.telefono.length < 8 ) {
-                        mensajeError = 'El número de teléfono debe contener 8 caracteres.';
-                    } else if ( !esValido ) {
-                        mensajeError = 'El número de teléfono no es valido.';
-                    } else if ( this.asociado.idDepartamento == '-1' ) {
-                        mensajeError = 'Seleccione un departamento.';
-                    } else if ( this.asociado.idMunicipio == '-1' ) {
-                        mensajeError = 'Seleccione un municipio.';
-                    } else if ( this.asociado.idMonto == '-1' ) {
-                        mensajeError = 'Seleccione el monto que necesita para su crédito.';
-                    } else if ( this.asociado.idMotivoPrestamo == '-1' ) {
-                        mensajeError = 'Seleccione en que tiene pensado utilizar su crédito.';
-                    } else if ( this.asociado.idIngresos == '-1' ) {
-                        mensajeError = 'Seleccione de donde obtiene sus ingresos.';
-                    } else if ( !this.asociado.contactoWhatsApp && !this.asociado.contactoLlamada ) {
-                        mensajeError = 'Seleccione la opción que le gustaría que le contactemos.';
-                    }
-                } else {
-                    mensajeError = 'Ingrése su nombre completo.';
-                }
-            }
-            
-            if ( mensajeError == '' ) {
-                // Invoca reCAPTCHA v3 antes de enviar los datos del formulario
-                this.recaptchaService.execute( 'solicitudCredito' ).subscribe( ( token : string ) => {
-                    console.debug( `Token [${ token }] generated` );
-                    
-                    let data : any = {
-                        esAsociado      : this.esAsociado,
-                        seValidoDpi     : this.seValidoDpi,
-                        asociado        : this.asociado,
-                        socioEncontrado : this.socioEncontrado,
-                        recaptchaToken  : token
-                    };
-                    
-                    this.servicioService.postData( 'formulario/guardarFormulario', data ).subscribe( {
-                        next  : res => {
-                            if ( res.respuesta == 'success' ) {
-                                this.servicioService.toaster(
-                                    'success',
-                                    'Su solicitud ha sido enviada, muy pronto recibira una llamada de uno de nuestros asesores. Ahora sera redireccionado a nuestro sitio web. Gracias.',
-                                    '',
-                                    '8000',
-                                    'https://micoopebienestar.com.gt/' );
-                                this.resetearDatosFormulario();
-                                this.guardarConExpiracion( 'token', token, 3 );
-                            } else {
-                                this.servicioService.toaster( res.respuesta, res.mensaje, '', '5000' );
-                            }
-                        },
-                        error : err => {
-                            console.log( 'Error en guardarFormulario: ', err );
-                        }
-                    } );
                 } );
-            } else {
-                this.servicioService.toaster( 'warning', mensajeError, '', '5000' );
-            }
+            } );
+        } else {
+            this.servicioService.toaster( 'warning', mensajeError, '', '5000' );
         }
-    }
-    
-    // Función para guardar datos en localStorage con una expiración
-    guardarConExpiracion( clave : any, valor : any, dias : any ) {
-        const ahora      = new Date();
-        // `dias` es convertido a milisegundos
-        const expiracion = new Date( ahora.getTime() + dias * 24 * 60 * 60 * 1000 ).getTime();
-        
-        const item = {
-            valor      : valor,
-            expiracion : expiracion
-        };
-        
-        localStorage.setItem( clave, JSON.stringify( item ) );
-    }
-    
-    // Función para obtener datos de localStorage, considerando la expiración
-    obtenerConExpiracion( clave : any ) {
-        const itemStr = localStorage.getItem( clave );
-        if ( !itemStr ) {
-            return null;
-        }
-        
-        const item  = JSON.parse( itemStr );
-        const ahora = new Date();
-        
-        // Devuelve el valor junto con un booleano indicando si aún está en el rango de validez
-        return {
-            valor   : item.valor,
-            enRango : ahora.getTime() <= item.expiracion // Verdadero si aún no ha expirado
-        };
     }
     
     validarTelefono( numero : string ) : boolean {
