@@ -103,7 +103,33 @@ export class InicioComponent implements OnInit {
         { inicio : 59150000, final : 59179999, operador : 'MOVISTAR' },
         { inicio : 59180000, final : 59199999, operador : 'TIGO' },
         { inicio : 59200000, final : 59899999, operador : 'CLARO' },
-        { inicio : 59900000, final : 59999999, operador : 'TIGO' }
+        { inicio : 59900000, final : 59999999, operador : 'TIGO' },
+        // Ciudad de Guatemala y alrededores
+        { inicio : 22000000, final : 24999999, operador : 'RESIDENCIAL' },
+        // Quetzaltenango
+        { inicio : 77200000, final : 77299999, operador : 'RESIDENCIAL' },
+        // Petén
+        { inicio : 79200000, final : 79299999, operador : 'RESIDENCIAL' },
+        // Escuintla
+        { inicio : 78800000, final : 78899999, operador : 'RESIDENCIAL' },
+        // Antigua Guatemala
+        { inicio : 78320000, final : 78329999, operador : 'RESIDENCIAL' },
+        // Huehuetenango
+        { inicio : 77600000, final : 77699999, operador : 'RESIDENCIAL' },
+        // Chiquimula
+        { inicio : 79420000, final : 79429999, operador : 'RESIDENCIAL' },
+        // Jalapa
+        { inicio : 79250000, final : 79259999, operador : 'RESIDENCIAL' },
+        // Cobán
+        { inicio : 79520000, final : 79529999, operador : 'RESIDENCIAL' },
+        // Mazatenango
+        { inicio : 78750000, final : 78759999, operador : 'RESIDENCIAL' },
+        // Zacapa
+        { inicio : 79360000, final : 79369999, operador : 'RESIDENCIAL' },
+        // Santa Rosa
+        { inicio : 78840000, final : 78849999, operador : 'RESIDENCIAL' },
+        // Jutiapa
+        { inicio : 78440000, final : 78449999, operador : 'RESIDENCIAL' }
     ];
     
     constructor(
