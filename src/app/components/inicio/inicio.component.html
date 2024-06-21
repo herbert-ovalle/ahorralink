@@ -136,7 +136,7 @@
                                        name="list-radio-user"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                 <label for="horizontal-list-date-appointment"
-                                       class="w-full py-2 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Visitenme</label>
+                                       class="w-full py-2 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Visita Personalizada</label>
                             </div>
                         </li>
                     </ul>
@@ -172,8 +172,22 @@
                                class="w-full"
                                id="agencia"
                                name="agencia"
-                               [(ngModel)]="asociado.idAgencia">
+                               [(ngModel)]="asociado.idAgencia"
+                               (change)="actualizarAgenciaSeleccionada(asociado.idAgencia)">
                     </ng-select>
+                </div>
+            </div>
+            <div class="grid gap-3 mb-3 md:grid-cols-1" *ngIf="agenciaSeleccionada">
+                <div>
+                    <h3>Información de la Agencia Seleccionada:</h3>
+                    <p><strong>Nombre:</strong> {{ agenciaSeleccionada.nombreAgencia }}</p>
+                    <p><strong>Dirección:</strong> {{ agenciaSeleccionada.direccion }}</p>
+                    <p><strong>Horarios de Atención:</strong></p>
+                    <ul>
+                        <li><strong>Lunes a Viernes:</strong> {{ agenciaSeleccionada.horariosDeAtencion.lunesViernes }}</li>
+                        <li><strong>Sábados:</strong> {{ agenciaSeleccionada.horariosDeAtencion.sabados }}</li>
+                        <li><strong>Domingos:</strong> {{ agenciaSeleccionada.horariosDeAtencion.domingos }}</li>
+                    </ul>
                 </div>
             </div>
             <div class="grid gap-3 mb-3 md:grid-cols-1">

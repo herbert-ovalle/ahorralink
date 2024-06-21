@@ -43,6 +43,120 @@ export class InicioComponent implements OnInit {
     
     mostrarListadoAgencia : boolean = false;
     mostrarFechaCita : boolean      = false;
+    agenciaSeleccionada : any       = null;
+    
+    private agencias : any = [
+        {
+            idAgencia          : 1,
+            nombreAgencia      : 'Central',
+            direccion          : 'C-94, Zona 3 Xecam',
+            horariosDeAtencion : {
+                'lunesViernes' : '09:00 a 18:00',
+                'sabados'      : '09:00 a 18:00',
+                'domingos'     : '09:00 a 13:00'
+            }
+        },
+        {
+            idAgencia          : 2,
+            nombreAgencia      : 'Pasac',
+            direccion          : 'B-234 Km 219 ruta al pacífico, Pasac Primero',
+            horariosDeAtencion : {
+                'lunesViernes' : '09:00 a 18:00',
+                'sabados'      : '09:00 a 18:00',
+                'domingos'     : '09:00 a 13:00'
+            }
+        },
+        {
+            idAgencia          : 3,
+            nombreAgencia      : 'Zunil',
+            direccion          : 'Canton Chuatiox zona 1',
+            horariosDeAtencion : {
+                'lunesViernes' : '09:00 a 18:00',
+                'sabados'      : '08:30 a 12:30',
+                'domingos'     : 'Cerrado'
+            }
+        },
+        {
+            idAgencia          : 4,
+            nombreAgencia      : 'San Felipe',
+            direccion          : '2a Av. 2-77 Zona 1',
+            horariosDeAtencion : {
+                'lunesViernes' : '08:30 a 17:30',
+                'sabados'      : '08:30 a 12:30',
+                'domingos'     : 'Cerrado'
+            }
+        },
+        {
+            idAgencia          : 5,
+            nombreAgencia      : 'Utz Ulew Mall',
+            direccion          : '19 Av. 2-40 zona 3, C.C. Utz Ulew Mall, local 3, Plaza Financiera',
+            horariosDeAtencion : {
+                'lunesViernes' : '10:00 a 19:00',
+                'sabados'      : '10:00 a 16:00',
+                'domingos'     : '10:00 a 16:00'
+            }
+        },
+        {
+            idAgencia          : 6,
+            nombreAgencia      : 'Almolonga',
+            direccion          : '3ra. Avenida 1-18 Zona 4',
+            horariosDeAtencion : {
+                'lunesViernes' : '08:30 a 17:30',
+                'sabados'      : '08:30 a 12:30',
+                'domingos'     : 'Cerrado'
+            }
+        },
+        {
+            idAgencia          : 7,
+            nombreAgencia      : 'Maxi Despensa Quetzaltenango',
+            direccion          : '7ma. Avenida 3-44 Zona 2',
+            horariosDeAtencion : {
+                'lunesViernes' : '08:00 a 20:00',
+                'sabados'      : '08:00 a 20:00',
+                'domingos'     : '08:00 a 20:00'
+            }
+        },
+        {
+            idAgencia          : 8,
+            nombreAgencia      : 'Centro Cantel',
+            direccion          : '3ra Calle 2-80 Zona 1',
+            horariosDeAtencion : {
+                'lunesViernes' : '08:00 a 18:00 Viernes Cerrado',
+                'sabados'      : '02:00 a 18:00',
+                'domingos'     : '09:00 a 13:00'
+            }
+        },
+        {
+            idAgencia          : 9,
+            nombreAgencia      : 'San Francisco Zapotitlán',
+            direccion          : '2da. Avenida Zona 2, Plaza del Sol',
+            horariosDeAtencion : {
+                'lunesViernes' : '08:30 a 17:30',
+                'sabados'      : '08:30 a 12:30',
+                'domingos'     : 'Cerrado'
+            }
+        },
+        {
+            idAgencia          : 10,
+            nombreAgencia      : 'Retalhuleu',
+            direccion          : '5a Avenida A, Centro Comercial Paseo Las Palmas',
+            horariosDeAtencion : {
+                'lunesViernes' : '08:30 a 17:30',
+                'sabados'      : '08:30 a 12:30',
+                'domingos'     : 'Cerrado'
+            }
+        },
+        {
+            idAgencia          : 11,
+            nombreAgencia      : 'Retalhuleu',
+            direccion          : '4ta. Av. Zona 4, San Sebastián, Reu.',
+            horariosDeAtencion : {
+                'lunesViernes' : '08:30 a 17:30 (Cerrado de 1 a 2 PM)',
+                'sabados'      : '08:30 a 13:00',
+                'domingos'     : 'Cerrado'
+            }
+        }
+    ];
     
     private rangosCelular = [
         { inicio : 30000000, final : 32289999, operador : 'TIGO' },
@@ -170,7 +284,7 @@ export class InicioComponent implements OnInit {
         
         //Ocultar los campos de fecha visita y agencia visita
         this.mostrarListadoAgencia = false;
-        this.mostrarFechaCita = false;
+        this.mostrarFechaCita      = false;
     }
     
     getAgencias() {
@@ -182,6 +296,12 @@ export class InicioComponent implements OnInit {
                 console.log( 'Error en getAgencias(): ', err );
             }
         } );
+    }
+    
+    actualizarAgenciaSeleccionada( idAgencia : any ) {
+        this.agenciaSeleccionada = this.agencias.find( ( agencia : {
+            idAgencia : any;
+        } ) => agencia.idAgencia === idAgencia );
     }
     
     getDepartamentos() {
@@ -234,8 +354,8 @@ export class InicioComponent implements OnInit {
         
         if ( input ) {
             // Resetear los radios
-            this.asociado.visitaAgencia    = null;
-            this.asociado.visitarAsociado  = null;
+            this.asociado.visitaAgencia   = null;
+            this.asociado.visitarAsociado = null;
             // Asignar true al método seleccionado
             if ( metodo == 'visitaAgencia' && input.checked ) {
                 this.asociado.visitaAgencia = 16;
@@ -246,6 +366,7 @@ export class InicioComponent implements OnInit {
                 this.mostrarFechaCita         = true;
                 this.mostrarListadoAgencia    = false;
                 this.asociado.idAgencia       = null;
+                this.agenciaSeleccionada      = null;
             }
         }
     }
@@ -276,7 +397,7 @@ export class InicioComponent implements OnInit {
                 mensajeError = 'Seleccione la opción que prefiere en su cita.';
             } else if ( this.asociado.visitaAgencia && this.asociado.idAgencia == null ) {
                 mensajeError = 'Seleccione su agencia mas cercana.';
-            } else if (this.asociado.visitarAsociado && this.asociado.fechaCita == '' ) {
+            } else if ( this.asociado.visitarAsociado && this.asociado.fechaCita == '' ) {
                 mensajeError = 'Ingrese la fecha y hora de su cita.';
             }
         } else {
