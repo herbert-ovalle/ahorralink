@@ -180,8 +180,7 @@
             <div class="grid gap-3 mb-3 md:grid-cols-1" *ngIf="agenciaSeleccionada">
                 <div>
                     <h3>Información de la Agencia Seleccionada:</h3>
-                    <p><strong>Nombre:</strong> {{ agenciaSeleccionada.nombreAgencia }}</p>
-                    <p><strong>Dirección:</strong> {{ agenciaSeleccionada.direccion }}</p>
+                    <p><strong>Dirección:</strong> {{ agenciaSeleccionada.direccion }} {{ agenciaSeleccionada.nombreAgencia }}</p>
                     <p><strong>Horarios de Atención:</strong></p>
                     <ul>
                         <li><strong>Lunes a Viernes:</strong> {{ agenciaSeleccionada.horariosDeAtencion.lunesViernes }}</li>

@@ -48,7 +48,7 @@ export class InicioComponent implements OnInit {
     private agencias : any = [
         {
             idAgencia          : 1,
-            nombreAgencia      : 'Central',
+            nombreAgencia      : 'Agencia Central',
             direccion          : 'C-94, Zona 3 Xecam',
             horariosDeAtencion : {
                 'lunesViernes' : '09:00 a 18:00',
@@ -58,8 +58,8 @@ export class InicioComponent implements OnInit {
         },
         {
             idAgencia          : 2,
-            nombreAgencia      : 'Pasac',
-            direccion          : 'B-234 Km 219 ruta al pacífico, Pasac Primero',
+            nombreAgencia      : 'Pasac Primero',
+            direccion          : 'B-234 Km 219 ruta al pacífico',
             horariosDeAtencion : {
                 'lunesViernes' : '09:00 a 18:00',
                 'sabados'      : '09:00 a 18:00',
@@ -149,7 +149,7 @@ export class InicioComponent implements OnInit {
         {
             idAgencia          : 11,
             nombreAgencia      : 'Retalhuleu',
-            direccion          : '4ta. Av. Zona 4, San Sebastián, Reu.',
+            direccion          : '4ta. Av. Zona 4, San Sebastián',
             horariosDeAtencion : {
                 'lunesViernes' : '08:30 a 17:30 (Cerrado de 1 a 2 PM)',
                 'sabados'      : '08:30 a 13:00',
