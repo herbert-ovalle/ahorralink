@@ -45,6 +45,8 @@ export class InicioComponent implements OnInit {
     mostrarFechaCita : boolean      = false;
     agenciaSeleccionada : any       = null;
     
+    todayString : string;
+    
     private agencias : any = [
         {
             idAgencia          : 1,
@@ -249,7 +251,10 @@ export class InicioComponent implements OnInit {
     constructor(
         private servicioService : ServicioService,
         private recaptchaService : ReCaptchaV3Service
-    ) {}
+    ) {
+        const today = new Date();
+        this.todayString = today.toISOString().split('T')[0];
+    }
     
     ngOnInit() {
         this.dtOptions = {
