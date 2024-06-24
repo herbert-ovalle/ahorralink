@@ -420,10 +420,10 @@ export class InicioComponent implements OnInit {
                         if ( res.respuesta == 'success' ) {
                             this.servicioService.toaster(
                                 'success',
-                                'Su solicitud ha sido enviada, muy pronto recibira una llamada de uno de nuestros asesores. Ahora sera redireccionado a nuestro sitio web. Gracias.',
+                                'Muy pronto recibira una llamada de uno de nuestros asesores. Ahora sera redireccionado a nuestro sitio web. Gracias.',
                                 '',
                                 '5000',
-                                '' );
+                                'https://micoopebienestar.com.gt/' );
                             this.resetearDatosFormulario();
                         } else {
                             this.servicioService.toaster( res.respuesta, res.mensaje, '', '5000' );
