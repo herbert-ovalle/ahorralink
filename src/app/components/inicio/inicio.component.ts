@@ -290,6 +290,7 @@ export class InicioComponent implements OnInit {
         //Ocultar los campos de fecha visita y agencia visita
         this.mostrarListadoAgencia = false;
         this.mostrarFechaCita      = false;
+        this.agenciaSeleccionada   = false;
     }
     
     getAgencias() {

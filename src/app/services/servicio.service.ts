@@ -8,9 +8,7 @@ import { ToastrService } from 'ngx-toastr';
     providedIn : 'root'
 } )
 export class ServicioService {
-    //private apiUrl = 'http://localhost:8080';
-    //private apiUrl = 'https://prestalink.micoopebienestar.com.gt/backend/public';
-    private apiUrl = 'http://localhost/ahorralink/backend/public';
+    private apiUrl = 'https://inversiones.micoopebienestar.com.gt/backend/public';
     
     constructor(
         private http : HttpClient,
