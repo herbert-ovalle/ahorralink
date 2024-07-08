@@ -35,11 +35,13 @@ export class InicioComponent implements OnInit {
         visitarAsociado  : false,
         fechaCita        : '',
         comentario       : '',
-        idAgencia        : null
+        idAgencia        : null,
+        idProducto       : null
     };
     lstDepartamentos : any = [];
     lstMunicipios : any    = [];
     lstAgencias : any      = [];
+    lstProductos : any     = [];
     
     mostrarListadoAgencia : boolean = false;
     mostrarFechaCita : boolean      = false;
@@ -315,6 +317,7 @@ export class InicioComponent implements OnInit {
             next  : res => {
                 this.lstDepartamentos = res;
                 this.getAgencias();
+                this.getProductos();
             },
             error : err => {
                 console.log( 'Error en getDepartamentos(): ', err );
@@ -337,6 +340,17 @@ export class InicioComponent implements OnInit {
             }
         } );
         
+    }
+    
+    getProductos() {
+        this.servicioService.getData( 'ahorralink/getProductos' ).subscribe( {
+            next  : res => {
+                this.lstProductos = res;
+            },
+            error : err => {
+                console.log( 'Error en getDepartamentos(): ', err );
+            }
+        } );
     }
     
     controlEstadoRadios( metodo : string, event : Event ) {
@@ -397,6 +411,8 @@ export class InicioComponent implements OnInit {
                 mensajeError = 'Seleccione un departamento.';
             } else if ( this.asociado.idMunicipio == null ) {
                 mensajeError = 'Seleccione un municipio.';
+            } else if ( this.asociado.idProducto == null ) {
+                mensajeError = 'Seleccione el producto en el que esta interesado.';
             } else if ( !this.asociado.contactoWhatsApp && !this.asociado.contactoLlamada ) {
                 mensajeError = 'Seleccione la opción que le gustaría que le contactemos.';
             } else if ( !this.asociado.visitaAgencia && !this.asociado.visitarAsociado ) {

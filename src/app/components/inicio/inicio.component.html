@@ -86,6 +86,20 @@
                                [(ngModel)]="asociado.idMunicipio">
                     </ng-select>
                 </div>
+                <!--Tipo de producto-->
+                <div>
+                    <label for="tipoProducto"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Producto en el que esta interesado<span class="text-red-700"> *</span></label>
+                    <ng-select [items]="lstProductos"
+                               bindLabel="producto"
+                               bindValue="idProducto"
+                               placeholder="Seleccione una opción"
+                               class="w-full"
+                               id="tipoProducto"
+                               name="tipoProducto"
+                               [(ngModel)]="asociado.idProducto">
+                    </ng-select>
+                </div>
                 <!--Cómo quieres que te contactemos-->
                 <div>
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Para complemento de datos, te contactamos por<span class="text-red-700"> *</span></label>
