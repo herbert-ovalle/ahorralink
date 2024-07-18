@@ -429,7 +429,7 @@ export class InicioComponent implements OnInit {
         if ( mensajeError == '' ) {
             // Invoca reCAPTCHA v3 antes de enviar los datos del formulario
             this.recaptchaService.execute( 'solicitudCredito' ).subscribe( ( token : string ) => {
-                console.debug( `Token [${ token }] generated` );
+                //console.debug( `Token [${ token }] generated` );
                 
                 let data : any = {
                     asociado       : this.asociado,
